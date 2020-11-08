@@ -25,6 +25,7 @@ import GHC.Float
 
 import Control.Monad(when)
 import System.Exit(exitFailure)
+import System.FilePath(joinPath)
 import System.IO(withBinaryFile, IOMode(ReadMode), openBinaryFile, hGetBuf)
 import Foreign.Marshal.Alloc(allocaBytes)
 import Foreign.Ptr(Ptr())
@@ -62,7 +63,8 @@ initGLState prog = do
   light (Light 0)	$= Enabled
   createWindow prog
   texture Texture2D $= Enabled 
-  tex <- loadTexture ".\\Images\\intel.bmp"
+  -- tex <- loadTexture ".\\Images\\intel.bmp"
+  tex <- loadTexture . joinPath $ [".", "Images", "intel.bmp"]
   texture Texture2D $= Disabled 
   return [tex]
   
@@ -106,7 +108,7 @@ displayCredits = preservingMatrix $ do
   translate $ Vector3 xc yc (0::GLfloat)
   scale 0.0003 0.0003 (0.0003::GLfloat)
   currentColor $= (Color4 0 0 1 1)
-  renderString Roman "Haskell Xonix (pre-alpha) - ssjoshi"
+  renderString Roman "Haskell Xonix (pre-alpha) - ssjoshi <> hyiltiz"
     where
       (xc, yc, zc) = convCoord (5, 980, 0)
  
